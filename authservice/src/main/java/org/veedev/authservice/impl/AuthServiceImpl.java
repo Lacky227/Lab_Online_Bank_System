@@ -45,9 +45,9 @@ public class AuthServiceImpl implements AuthService {
         } else if (!passwordEncoder.matches(loginRequest.getPassword(), client.getPassword())) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Incorrect password");
         }
-        redisTemplate.opsForValue().set("session:" + client.getPhoneNumber(), client.getId().toString(), 24, TimeUnit.HOURS);
-        redisTemplate.opsForValue().set("session:" + client.getPhoneNumber(), client.getFirstName(), 24, TimeUnit.HOURS);
-        redisTemplate.opsForValue().set("session:" + client.getPhoneNumber(), client.getLastName(), 24, TimeUnit.HOURS);
+        redisTemplate.opsForValue().set("session id:" + client.getPhoneNumber(), client.getId().toString(), 24, TimeUnit.HOURS);
+        redisTemplate.opsForValue().set("session firstName:" + client.getPhoneNumber(), client.getFirstName(), 24, TimeUnit.HOURS);
+        redisTemplate.opsForValue().set("session lastName:" + client.getPhoneNumber(), client.getLastName(), 24, TimeUnit.HOURS);
         return ResponseEntity.status(HttpStatus.OK).body("Login successful");
     }
 }
