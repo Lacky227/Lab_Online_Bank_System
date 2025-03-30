@@ -27,6 +27,9 @@ public class Account {
     private BigDecimal balance;
 
     @Column(nullable = false)
+    private String pinCode;
+
+    @Column(nullable = false)
     private LocalDateTime created;
 
     @Column(nullable = false)
