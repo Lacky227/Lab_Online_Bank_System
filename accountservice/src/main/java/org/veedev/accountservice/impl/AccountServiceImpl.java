@@ -24,7 +24,7 @@ public class AccountServiceImpl implements AccountService {
     private final RedisTemplate<String, String> redisTemplate;
     @Override
     public ResponseEntity<String> createAccount(CreateAccountRequest request) {
-        String cacheKey = "session:" + request.getPhoneNumber();
+        String cacheKey = "session id:" + request.getPhoneNumber();
         String cacheValue = redisTemplate.opsForValue().get(cacheKey);
         if (cacheValue == null) {
             return ResponseEntity.status(HttpStatus.CONFLICT).body("Account creation failed, phone number is incorrect");
@@ -43,10 +43,10 @@ public class AccountServiceImpl implements AccountService {
         account.setBalance(BigDecimal.ZERO);
         String pinCode = AccountUtil.generatePinCode();
         account.setPinCode(passwordEncoder.encode(pinCode));
-        account.setCreated(LocalDateTime.now());
-        account.setUpdated(LocalDateTime.now());
-        account.setEnd(LocalDateTime.now().plusYears(5));
+        account.setCreatedAt(LocalDateTime.now());
+        account.setUpdatedAt(LocalDateTime.now());
+        account.setEndAt(LocalDateTime.now().plusYears(5));
         accountRepository.save(account);
-        return ResponseEntity.status(HttpStatus.CREATED).body("Account created successfully, your account number is: " + account.getNumber() + ", pin code is: " + pinCode + ", and account end is: " + account.getEnd());
+        return ResponseEntity.status(HttpStatus.CREATED).body("Account created successfully, your account number is: " + account.getNumber() + ", pin code is: " + pinCode + ", and account end is: " + account.getEndAt());
     }
 }

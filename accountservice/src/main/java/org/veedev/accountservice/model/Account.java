@@ -30,11 +30,11 @@ public class Account {
     private String pinCode;
 
     @Column(nullable = false)
-    private LocalDateTime created;
+    private LocalDateTime createdAt;
 
     @Column(nullable = false)
-    private LocalDateTime updated;
+    private LocalDateTime updatedAt;
 
     @Column(nullable = false)
-    private LocalDateTime end;
+    private LocalDateTime endAt;
 }
