@@ -7,7 +7,7 @@ import java.util.Random;
 public class AccountUtil {
     private final Random random = new Random();
 
-    private static String generateAccountNumber() {
+    public static String generateAccountNumber() {
         StringBuilder accountNumber = new StringBuilder();
         for (int i = 0; i < 16; i++) {
             accountNumber.append(random.nextInt(10));
