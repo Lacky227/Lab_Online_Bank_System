@@ -15,6 +15,7 @@ import org.veedev.accountservice.util.AccountUtil;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 @Service
 @AllArgsConstructor
@@ -47,6 +48,7 @@ public class AccountServiceImpl implements AccountService {
         account.setUpdatedAt(LocalDateTime.now());
         account.setEndAt(LocalDateTime.now().plusYears(5));
         accountRepository.save(account);
+        redisTemplate.opsForValue().set("session lastName:" + account.getId(), account.getNumber(), 24, TimeUnit.HOURS);
         return ResponseEntity.status(HttpStatus.CREATED).body("Account created successfully, your account number is: " + account.getNumber() + ", pin code is: " + pinCode + ", and account end is: " + account.getEndAt());
     }
 }
