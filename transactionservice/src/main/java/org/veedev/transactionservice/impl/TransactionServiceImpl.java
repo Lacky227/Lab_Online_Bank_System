@@ -8,23 +8,25 @@ import org.springframework.stereotype.Service;
 import org.veedev.transactionservice.dto.TransactionRequest;
 import org.veedev.transactionservice.dto.TransferRequest;
 import org.veedev.transactionservice.model.TransactionType;
+import org.veedev.transactionservice.service.KafkaService;
 import org.veedev.transactionservice.service.TransactionService;
 
 @Service
 @AllArgsConstructor
 public class TransactionServiceImpl implements TransactionService {
+    private final KafkaService kafkaService;
     private final KafkaTemplate<String, TransactionRequest> kafkaTemplate;
     @Override
     public ResponseEntity<String> deposit(TransactionRequest event) {
         event.setTransactionType(TransactionType.DEPOSIT);
-        kafkaTemplate.send("transaction-requested", event);
+        kafkaService.requestTransaction(event);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
     @Override
     public ResponseEntity<String> withdraw(TransactionRequest event) {
         event.setTransactionType(TransactionType.WITHDRAW);
-        kafkaTemplate.send("transaction-requested", event);
+        kafkaService.requestTransaction(event);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
