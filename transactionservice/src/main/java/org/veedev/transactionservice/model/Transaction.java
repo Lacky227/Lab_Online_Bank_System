@@ -10,6 +10,7 @@ import java.util.Currency;
 @Data
 public class Transaction {
     private String transactionId;
+    private String lastName;
     private String numberAccount;
     private BigDecimal amount;
     private Currency currency;
