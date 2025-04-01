@@ -21,7 +21,7 @@ public class Account {
     private String number;
 
     @Column(nullable = false)
-    private CurrencyType currency;
+    private String currency;
 
     @Column(nullable = false)
     private BigDecimal balance;

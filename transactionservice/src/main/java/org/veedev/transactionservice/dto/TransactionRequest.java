@@ -1,14 +1,16 @@
 package org.veedev.transactionservice.dto;
 
-import lombok.AllArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
-import org.veedev.transactionservice.model.TransactionType;
 
 import java.math.BigDecimal;
 
 @Data
 public class TransactionRequest {
+    @JsonProperty("accountNumber")
     private String accountNumber;
-    private TransactionType transactionType;
+    @JsonProperty("amount")
     private BigDecimal amount;
+    @JsonProperty("transactionType")
+    private String transactionType;
 }

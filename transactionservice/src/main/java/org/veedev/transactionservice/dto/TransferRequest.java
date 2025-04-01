@@ -1,7 +1,6 @@
 package org.veedev.transactionservice.dto;
 
 import lombok.Data;
-import org.veedev.transactionservice.model.TransactionType;
 
 import java.math.BigDecimal;
 
@@ -12,5 +11,5 @@ public class TransferRequest {
     private String fromLastName;
     private String toLastName;
     private BigDecimal amount;
-    private TransactionType transactionType;
+    private String transactionType;
 }

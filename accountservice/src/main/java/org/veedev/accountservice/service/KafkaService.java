@@ -1,7 +1,7 @@
 package org.veedev.accountservice.service;
 
-import org.veedev.accountservice.dto.TransactionRequested;
+import org.veedev.accountservice.dto.TransactionRequest;
 
 public interface KafkaService {
-    void processTransaction(TransactionRequested event);
+    void processTransaction(TransactionRequest event);
 }
