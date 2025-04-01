@@ -22,8 +22,4 @@ public class TransactionController {
     public ResponseEntity<String> withdraw(@RequestBody TransactionRequest transactionRequest) {
         return transactionService.withdraw(transactionRequest);
     }
-    @PostMapping("/transfer")
-    public ResponseEntity<String> transfer(@RequestBody TransferRequest transactionRequest) {
-        return transactionService.transfer(transactionRequest);
-    }
 }
