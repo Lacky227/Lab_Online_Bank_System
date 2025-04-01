@@ -13,7 +13,7 @@ public class Transaction {
     private String lastName;
     private String numberAccount;
     private BigDecimal amount;
-    private Currency currency;
+    private String currency;
     private TransactionType transactionType;
     private LocalDateTime timestamp;
 }
