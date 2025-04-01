@@ -8,5 +8,5 @@ import org.veedev.reportservice.model.Transaction;
 @Data
 public class ReportDTO {
     private HttpServletResponse response;
-    private Transaction transaction;
+    private String accountNumber;
 }
