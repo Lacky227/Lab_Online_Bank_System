@@ -8,7 +8,6 @@ import java.math.BigDecimal;
 @Data
 public class TransactionRequest {
     private String accountNumber;
-    private String phoneNumber;
-    private TransactionType transactionType;
     private BigDecimal amount;
+    private TransactionType transactionType;
 }
