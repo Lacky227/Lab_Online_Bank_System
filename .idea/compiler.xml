@@ -3,7 +3,7 @@
   <component name="CompilerConfiguration">
     <annotationProcessing>
       <profile default="true" name="Default" enabled="true" />
-      <profile name="Annotation profile for accountservice" enabled="true">
+      <profile name="Annotation profile for reportservice" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
@@ -11,6 +11,7 @@
           <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.36/lombok-1.18.36.jar" />
         </processorPath>
         <module name="transactionservice" />
+        <module name="reportservice" />
         <module name="accountservice" />
         <module name="authservice" />
       </profile>
@@ -20,6 +21,7 @@
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="accountservice" options="-parameters" />
       <module name="authservice" options="-parameters" />
+      <module name="reportservice" options="-parameters" />
       <module name="transactionservice" options="-parameters" />
     </option>
   </component>
