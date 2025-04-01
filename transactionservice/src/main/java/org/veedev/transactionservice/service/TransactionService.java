@@ -7,5 +7,4 @@ import org.veedev.transactionservice.dto.TransferRequest;
 public interface TransactionService {
     ResponseEntity<String> deposit(TransactionRequest transactionRequest);
     ResponseEntity<String> withdraw(TransactionRequest transactionRequest);
-    ResponseEntity<String> transfer(TransferRequest transferRequest);
 }
