@@ -4,7 +4,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.veedev.reportservice.dto.ReportDTO;
 import org.veedev.reportservice.model.Transaction;
 import org.veedev.reportservice.service.ReportService;
 
