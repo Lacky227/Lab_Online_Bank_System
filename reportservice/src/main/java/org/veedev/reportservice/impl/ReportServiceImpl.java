@@ -7,6 +7,7 @@ import com.itextpdf.layout.element.Cell;
 import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.element.Table;
 import com.itextpdf.layout.properties.UnitValue;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -28,18 +29,18 @@ public class ReportServiceImpl implements ReportService {
     }
 
     @Override
-    public void generateReport(ReportDTO reportDTO) {
-        reportDTO.getResponse().setContentType("application/pdf");
-        reportDTO.getResponse().setHeader("Content-Disposition", "attachment; filename=transaction.pdf");
+    public void generateReport(String accountNumber, HttpServletResponse response) {
+        response.setContentType("application/pdf");
+        response.setHeader("Content-Disposition", "attachment; filename=transaction.pdf");
         try {
-            PdfWriter pdfWriter =new PdfWriter(reportDTO.getResponse().getOutputStream());
+            PdfWriter pdfWriter =new PdfWriter(response.getOutputStream());
             PdfDocument pdfDocument = new PdfDocument(pdfWriter);
             Document document = new Document(pdfDocument);
 
             document.add(new Paragraph("Transaction Report").setFontSize(16));
-            List<Transaction> transactions = reportRepository.findByNumberAccount(reportDTO.getAccountNumber());
+            List<Transaction> transactions = reportRepository.findByNumberAccount(accountNumber);
             if (transactions.isEmpty()) {
-                reportDTO.getResponse().setStatus(HttpStatus.NO_CONTENT.value());
+                response.setStatus(HttpStatus.NO_CONTENT.value());
                 document.add(new Paragraph("No transactions found"));
                 document.close();
                 return;
@@ -63,7 +64,7 @@ public class ReportServiceImpl implements ReportService {
             }
             document.add(table);
             document.close();
-            reportDTO.getResponse().getOutputStream().flush();
+            response.getOutputStream().flush();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

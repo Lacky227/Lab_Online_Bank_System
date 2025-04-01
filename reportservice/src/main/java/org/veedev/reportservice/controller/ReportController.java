@@ -1,5 +1,6 @@
 package org.veedev.reportservice.controller;
 
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,14 +16,13 @@ public class ReportController {
     private ReportService reportService;
 
     @PostMapping("/save-report")
-    public ResponseEntity<String> saveReport(@RequestBody Transaction transaction) {
+    public void saveReport(@RequestBody Transaction transaction) {
         reportService.saveTransaction(transaction);
-        return ResponseEntity.ok("Report saved successfully");
     }
 
     @GetMapping("/download")
-    public ResponseEntity<String> downloadReport(@RequestBody ReportDTO reportDTO) {
-        reportService.generateReport(reportDTO);
+    public ResponseEntity<String> downloadReport(@RequestParam String accountNumber, HttpServletResponse response) {
+        reportService.generateReport(accountNumber, response);
         return ResponseEntity.ok("Report downloaded successfully");
     }
 }
