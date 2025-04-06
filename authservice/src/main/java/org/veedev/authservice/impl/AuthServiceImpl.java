@@ -12,6 +12,7 @@ import org.veedev.authservice.model.Client;
 import org.veedev.authservice.repository.ClientRepository;
 import org.veedev.authservice.service.AuthService;
 
+import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
 @Service
@@ -39,15 +40,15 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public ResponseEntity<String> login(LoginRequest loginRequest) {
-        Client client = clientRepository.findByPhoneNumber(loginRequest.getPhoneNumber());
-        if (client == null) {
+        Optional<Client> client = clientRepository.findByPhoneNumber(loginRequest.getPhoneNumber());
+        if (client.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Client not found with this phone number: " + loginRequest.getPhoneNumber());
-        } else if (!passwordEncoder.matches(loginRequest.getPassword(), client.getPassword())) {
+        } else if (!passwordEncoder.matches(loginRequest.getPassword(), client.get().getPassword())) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Incorrect password");
         }
-        redisTemplate.opsForValue().set("session id:" + client.getPhoneNumber(), client.getId().toString(), 24, TimeUnit.HOURS);
-        redisTemplate.opsForValue().set("session firstName:" + client.getPhoneNumber(), client.getFirstName(), 24, TimeUnit.HOURS);
-        redisTemplate.opsForValue().set("session lastName:" + client.getPhoneNumber(), client.getLastName(), 24, TimeUnit.HOURS);
+        redisTemplate.opsForValue().set("session id:" + client.get().getPhoneNumber(), client.get().getId().toString(), 24, TimeUnit.HOURS);
+        redisTemplate.opsForValue().set("session firstName:" + client.get().getPhoneNumber(), client.get().getFirstName(), 24, TimeUnit.HOURS);
+        redisTemplate.opsForValue().set("session lastName:" + client.get().getPhoneNumber(), client.get().getLastName(), 24, TimeUnit.HOURS);
         return ResponseEntity.status(HttpStatus.OK).body("Login successful");
     }
 }
