@@ -28,7 +28,7 @@ public class ReportController {
         return ResponseEntity.ok("Report downloaded successfully");
     }
     @GetMapping("/transactions")
-    List<Transaction> getTransactions(@RequestParam AccountNumberRequest accountNumberRequest) {
+    List<Transaction> getTransactions(@RequestBody AccountNumberRequest accountNumberRequest) {
         return reportService.getTransactions(accountNumberRequest.getAccountNumber());
     }
 }
