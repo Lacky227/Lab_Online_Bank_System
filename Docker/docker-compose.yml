@@ -39,5 +39,4 @@ services:
       - mongo_data:/data/db
 
 volumes:
-  postgres_data:
   mongo_data:
