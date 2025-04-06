@@ -3,10 +3,7 @@ package org.veedev.accountservice.controller;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.veedev.accountservice.dto.AccountDetailsRequest;
-import org.veedev.accountservice.dto.ClientIdRequest;
-import org.veedev.accountservice.dto.CreateAccountRequest;
-import org.veedev.accountservice.dto.TransactionRequest;
+import org.veedev.accountservice.dto.*;
 import org.veedev.accountservice.model.Account;
 import org.veedev.accountservice.model.Transaction;
 import org.veedev.accountservice.service.AccountService;
@@ -33,7 +30,7 @@ public class AccountController {
         return accountService.getAccountsByClientId(clientIdRequest);
     }
     @GetMapping("/details")
-    AccountDetailsRequest getAccountDetails(@RequestBody String number){
-        return accountService.getAccountDetails(number);
+    AccountDetailsRequest getAccountDetails(@RequestBody NumberRequest numberRequest){
+        return accountService.getAccountDetails(numberRequest.getNumber());
     }
 }
