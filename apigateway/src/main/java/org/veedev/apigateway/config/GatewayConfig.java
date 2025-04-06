@@ -13,7 +13,7 @@ public class GatewayConfig {
                 .route("auth_service", r -> r.path("/auth/**", "/profile").uri("http://localhost:8081/"))
                 .route("account_service", r -> r.path("/account/**").uri("http://localhost:8082/"))
                 .route("transaction_service", r -> r.path("/trans/**").uri("http://localhost:8083/"))
-                .route("report_service", r -> r.path("/report/download").uri("http://localhost:8084/"))
+                .route("report_service", r -> r.path("/report/download", "/report/transactions").uri("http://localhost:8084/"))
                 .build();
     }
 }
