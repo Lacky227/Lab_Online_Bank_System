@@ -16,6 +16,7 @@ import org.veedev.reportservice.repository.ReportRepository;
 import org.veedev.reportservice.service.ReportService;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -67,5 +68,14 @@ public class ReportServiceImpl implements ReportService {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @Override
+    public List<Transaction> getTransactions(String accountNumber) {
+        List<Transaction> transactions = reportRepository.findByNumberAccount(accountNumber);
+        if (transactions.isEmpty()) {
+            return new ArrayList<>();
+        }
+        return transactions;
     }
 }
