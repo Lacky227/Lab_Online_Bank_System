@@ -15,7 +15,7 @@ public class ClientServiceImpl implements ClientService {
 
     @Override
     public Client getClient(String phoneNumber) {
-        Optional<Client> client = clientRepository.getClientByPhoneNumber(phoneNumber);
+        Optional<Client> client = clientRepository.findByPhoneNumber(phoneNumber);
         if (client.isEmpty()) {
             throw new RuntimeException("No client found with phone number " + phoneNumber);
         }
