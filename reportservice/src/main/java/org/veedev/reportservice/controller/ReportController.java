@@ -4,8 +4,11 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.veedev.reportservice.dto.AccountNumberRequest;
 import org.veedev.reportservice.model.Transaction;
 import org.veedev.reportservice.service.ReportService;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/report")
@@ -23,5 +26,9 @@ public class ReportController {
     public ResponseEntity<String> downloadReport(@RequestParam String accountNumber, HttpServletResponse response) {
         reportService.generateReport(accountNumber, response);
         return ResponseEntity.ok("Report downloaded successfully");
+    }
+    @GetMapping("/transactions")
+    List<Transaction> getTransactions(@RequestParam AccountNumberRequest accountNumberRequest) {
+        return reportService.getTransactions(accountNumberRequest.getAccountNumber());
     }
 }
