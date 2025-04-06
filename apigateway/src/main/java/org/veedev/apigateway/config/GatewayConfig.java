@@ -10,10 +10,10 @@ public class GatewayConfig {
     @Bean
     RouteLocator routes(RouteLocatorBuilder builder) {
         return builder.routes()
-                .route("auth_service", r -> r.path("/auth/**").uri("http://localhost:8081/auth"))
-                .route("account_service", r -> r.path("/account/**").uri("http://localhost:8082/account"))
-                .route("transaction_service", r -> r.path("/trans/**").uri("http://localhost:8083/trans"))
-                .route("report_service", r -> r.path("/report/download").uri("http://localhost:8084/report"))
+                .route("auth_service", r -> r.path("/auth/**", "/profile").uri("http://localhost:8081/"))
+                .route("account_service", r -> r.path("/account/**").uri("http://localhost:8082/"))
+                .route("transaction_service", r -> r.path("/trans/**").uri("http://localhost:8083/"))
+                .route("report_service", r -> r.path("/report/download").uri("http://localhost:8084/"))
                 .build();
     }
 }
