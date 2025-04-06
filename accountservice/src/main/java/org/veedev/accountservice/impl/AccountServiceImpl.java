@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+import org.veedev.accountservice.dto.ClientIdRequest;
 import org.veedev.accountservice.dto.CreateAccountRequest;
 import org.veedev.accountservice.dto.TransactionRequest;
 import org.veedev.accountservice.model.Account;
@@ -83,5 +84,14 @@ public class AccountServiceImpl implements AccountService {
         transaction.setTransactionType(request.getTransactionType());
         transaction.setTimestamp(LocalDateTime.now());
         return transaction;
+    }
+
+    @Override
+    public List<Account> getAccountsByClientId(ClientIdRequest request) {
+        List<Account> accounts = accountRepository.findByClientId(request.getClientId());
+        if (accounts.isEmpty()) {
+            throw new RuntimeException("Accounts not found");
+        }
+        return accounts;
     }
 }
