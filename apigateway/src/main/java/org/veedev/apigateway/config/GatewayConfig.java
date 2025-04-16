@@ -4,16 +4,20 @@ import org.springframework.cloud.gateway.route.RouteLocator;
 import org.springframework.cloud.gateway.route.builder.RouteLocatorBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.veedev.apigateway.filter.JwtAuthenticationFilter;
 
 @Configuration
 public class GatewayConfig {
+    private JwtAuthenticationFilter jwtFilter;
+
     @Bean
     RouteLocator routes(RouteLocatorBuilder builder) {
         return builder.routes()
-                .route("auth_service", r -> r.path("/auth/**", "/profile").uri("http://localhost:8081/"))
-                .route("account_service", r -> r.path("/account/**").uri("http://localhost:8082/"))
-                .route("transaction_service", r -> r.path("/trans/**").uri("http://localhost:8083/"))
-                .route("report_service", r -> r.path("/report/download", "/report/transactions").uri("http://localhost:8084/"))
+                .route("auth_service", r -> r.path("/auth/**", "/profile").filters(f -> f.filter(jwtFilter)).uri("http://localhost:8081/"))
+                .route("account_service", r -> r.path("/account/**").filters(f -> f.filter(jwtFilter)).uri("http://localhost:8082/"))
+                .route("transaction_service", r -> r.path("/trans/**").filters(f -> f.filter(jwtFilter)).uri("http://localhost:8083/"))
+                .route("report_service", r -> r.path("/report/download", "/report/transactions").filters(f -> f.filter(jwtFilter)).uri("http://localhost:8084/"))
                 .build();
     }
+
 }
