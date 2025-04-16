@@ -6,5 +6,5 @@ import org.veedev.authservice.dto.RegisterRequest;
 
 public interface AuthService {
     ResponseEntity<String> register(RegisterRequest registerRequest);
-    ResponseEntity<String> login(LoginRequest loginRequest);
+    ResponseEntity<?> login(LoginRequest loginRequest);
 }

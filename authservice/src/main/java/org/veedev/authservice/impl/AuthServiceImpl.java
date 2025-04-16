@@ -6,11 +6,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.veedev.authservice.dto.AuthResponse;
 import org.veedev.authservice.dto.LoginRequest;
 import org.veedev.authservice.dto.RegisterRequest;
 import org.veedev.authservice.model.Client;
 import org.veedev.authservice.repository.ClientRepository;
 import org.veedev.authservice.service.AuthService;
+import org.veedev.authservice.utils.JwtUtils;
 
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
@@ -21,6 +23,7 @@ public class AuthServiceImpl implements AuthService {
     private final ClientRepository clientRepository;
     private final PasswordEncoder passwordEncoder;
     private final RedisTemplate<String, String> redisTemplate;
+    private final JwtUtils jwtUtils;
     @Override
     public ResponseEntity<String> register(RegisterRequest registerRequest) {
         if (clientRepository.existsByEmail(registerRequest.getEmail())) {
@@ -39,7 +42,7 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public ResponseEntity<String> login(LoginRequest loginRequest) {
+    public ResponseEntity<?> login(LoginRequest loginRequest) {
         Optional<Client> client = clientRepository.findByPhoneNumber(loginRequest.getPhoneNumber());
         if (client.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Client not found with this phone number: " + loginRequest.getPhoneNumber());
@@ -49,6 +52,7 @@ public class AuthServiceImpl implements AuthService {
         redisTemplate.opsForValue().set("session id:" + client.get().getPhoneNumber(), client.get().getId().toString(), 24, TimeUnit.HOURS);
         redisTemplate.opsForValue().set("session firstName:" + client.get().getPhoneNumber(), client.get().getFirstName(), 24, TimeUnit.HOURS);
         redisTemplate.opsForValue().set("session lastName:" + client.get().getPhoneNumber(), client.get().getLastName(), 24, TimeUnit.HOURS);
-        return ResponseEntity.status(HttpStatus.OK).body("Login successful");
+        String token = jwtUtils.generationToken(loginRequest.getPhoneNumber());
+        return ResponseEntity.status(HttpStatus.OK).body(new AuthResponse(token));
     }
 }
