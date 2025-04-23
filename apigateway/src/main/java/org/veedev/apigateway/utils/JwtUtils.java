@@ -2,25 +2,12 @@ package org.veedev.apigateway.utils;
 
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
-import io.jsonwebtoken.security.Keys;
 import org.springframework.stereotype.Component;
-
-import java.util.Date;
 
 @Component
 public class JwtUtils {
-    private final String secret = "secretKey";
-    private final long expiration = 3600000;
+    private final String secret = "VGhpcyBpcyBhIHZlcnkgc2VjdXJlIHNlY3JldCBrZXkgdGhhdCBoYXMgYWxsb3Qgb2YgYnl0ZXMgdGhhdCBhcmUgbmV2ZXIgcmV2ZWFsZWQh";
 
-    public String generationToken(String phoneNumber) {
-        return Jwts.builder()
-                .setSubject(phoneNumber)
-                .setIssuedAt(new Date())
-                .setExpiration(new Date(System.currentTimeMillis() + expiration))
-                .signWith(Keys.hmacShaKeyFor(secret.getBytes()), SignatureAlgorithm.HS512)
-                .compact();
-    }
     public String extractPhoneNumber(String token) {
         return Jwts.parserBuilder()
                 .setSigningKey(secret.getBytes())
