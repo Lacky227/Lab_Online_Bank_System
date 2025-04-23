@@ -52,7 +52,7 @@ public class AuthServiceImpl implements AuthService {
         redisTemplate.opsForValue().set("session id:" + client.get().getPhoneNumber(), client.get().getId().toString(), 24, TimeUnit.HOURS);
         redisTemplate.opsForValue().set("session firstName:" + client.get().getPhoneNumber(), client.get().getFirstName(), 24, TimeUnit.HOURS);
         redisTemplate.opsForValue().set("session lastName:" + client.get().getPhoneNumber(), client.get().getLastName(), 24, TimeUnit.HOURS);
-        String token = jwtUtils.generationToken(loginRequest.getPhoneNumber());
+        String token = jwtUtils.generationToken(loginRequest.getPhoneNumber(), client.get().getId());
         return ResponseEntity.status(HttpStatus.OK).body(new AuthResponse(token));
     }
 }
