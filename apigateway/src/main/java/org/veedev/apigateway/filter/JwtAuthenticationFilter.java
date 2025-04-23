@@ -36,11 +36,13 @@ public class JwtAuthenticationFilter implements GatewayFilter {
 
             if (jwtUtils.validateToken(token)) {
                 String phoneNumber = jwtUtils.extractPhoneNumber(token);
-                System.out.println("Token valid. Phone: " + phoneNumber);
+                Long clientId = jwtUtils.extractClientId(token);
+                System.out.println("Token valid. Phone: " + phoneNumber + ", Client ID: " + clientId + ".");
 
                 exchange = exchange.mutate().request(
                         exchange.getRequest().mutate()
                                 .header("X-Phone-Number", phoneNumber)
+                                .header("X-Client-Id", String.valueOf(clientId))
                                 .build()
                 ).build();
 
