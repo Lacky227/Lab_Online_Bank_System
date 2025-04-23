@@ -9,12 +9,11 @@ import org.veedev.authservice.service.ClientService;
 @RestController
 @RequestMapping("/profile")
 @AllArgsConstructor
-@CrossOrigin
 public class ClientController {
     private final ClientService clientService;
 
     @GetMapping
-    public Client getProfile(@RequestBody PhoneNumberRequest request) {
-        return clientService.getClient(request.getPhoneNumber());
+    public Client getProfile(@RequestHeader("X-Phone-Number") String phoneNumber) {
+        return clientService.getClient(phoneNumber);
     }
 }

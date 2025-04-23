@@ -10,7 +10,6 @@ import org.veedev.authservice.service.AuthService;
 @RestController
 @RequestMapping("/auth")
 @AllArgsConstructor
-@CrossOrigin
 public class AuthController {
     private final AuthService authService;
 
